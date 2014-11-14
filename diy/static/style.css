@@ -1,0 +1,32 @@
+
+tr#brHead th{
+    vertical-align: bottom;
+    padding-bottom: 15px;
+}
+
+tr#brHead th a.rotated{
+    display: block;
+    /*Firefox*/
+    -moz-transform: rotate(-90deg);
+    /*Safari*/
+    -webkit-transform: rotate(-90deg);
+    /*Opera*/
+    -o-transform: rotate(-90deg);
+    /*IE*/
+    writing-mode: tb-rl;
+    filter: flipv fliph;
+    width: 2.2em;
+    line-height: 1em;
+}
+
+tr#brHead {
+    height: 125px;
+}
+
+p.hit strong.BrainRegionDictTerm{
+    background-color: lightblue;
+}
+
+div#info {
+    padding-bottom: 25px;
+}

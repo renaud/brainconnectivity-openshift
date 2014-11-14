@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+    <title>Brain Regions Co-occurrences Matrix</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="/static/js/purl.js" type="text/javascript"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#menu").load("/static/menu.html", function() {
+                $('li#nav2').addClass('active');
+            });
+
+            var summaryTable = $("#summaryTable");
+            var brHead = $("#brHead");
+            var summaryBody = $("#summaryBody");
+
+            var db = $.url().param('db');
+            var size = $.url().param('size');
+            $.getJSON('/'+db+'/br/matrix/?size='+size, function(response){
+                // tuples (id, name)
+                var top_brs = response.top_brs;
+                var coocs = response.coocs;
+                var max = 2500;
+
+                //draw the brain region header row
+                brHead.append("<td>&nbsp;</td>");
+                for (i = 0; i < top_brs.length; ++i) {
+                    brHead.append("<th><a class='rotated'>"+top_brs[i][1]+"</a></th>");
+                }
+                $.each(top_brs, function(frmIdx, frm) {
+                    summaryBody.append("<tr>");
+                    summaryBody.append("<th><a>"+frm[1]+"</a></th>");
+                    $.each(top_brs, function(toIdx, to) {
+                        //console.log(frm  + ' -- ' + to + ' ('+frmIdx+'-'+toIdx+')');
+
+                        var symFrm = frm, symTo = to;
+                        if (frm[0] > to[0]){ // symetrize (swap if neccess.)
+                             symFrm = to, symTo = frm;
+                        }
+                        var cnt = 0;
+                        if (symFrm[0] in coocs){
+                            if (symTo[0] in coocs[symFrm[0]]){
+                                cnt = coocs[symFrm[0]][symTo[0]];
+                            }
+                        }
+                        var cell = $('<td></td>');
+                        if (cnt > 0){
+                            var link = $('<a></a>');
+                            link.attr('href', 'details.html?br1='+frm[0]+"&br2="+to[0]+"&db="+db);
+                            link.html('' + cnt);
+                            link.appendTo(cell);
+                        }
+                        var gradient = Math.min(1, cnt/max);
+                        cell.css("background-color", "rgba(192,192,192,"+gradient+")");
+                        cell.css('text-align', 'center');
+                        cell.appendTo(summaryBody);
+                    });
+                    summaryBody.append("</tr>");
+                });
+                $('#title').html('Brain Regions Co-occurrences Matrix');
+
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="menu"></div>
+        <h3 id="title">Loading...</h3>
+        <table class="table table-hover" id="summaryTable">
+            <tr id="brHead"></tr>
+            <tbody id="summaryBody"></tbody>
+        </table>
+    </div>
+</body>
+</html>

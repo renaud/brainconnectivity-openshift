@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+    <title>Brain Regions Co-occurrences</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#menu").load("/static/menu.html", function() {
+                $('li#nav1').addClass('active');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+
+        <div id="menu"></div>
+
+        <h3 id="title">Connections to a Region</h3>
+        <p>A list of all regions connected to this region:</p>
+        <ul>
+            <li>
+                Nucleus Accumbens: <a href="/static/br/region.html?br=56&db=20140226_aba">ABA</a>,
+                <a href="/static/br/region.html?br=912&db=20140522_brainer">braiNER</a>
+            </li>
+            <li><a href="/static/br/region.html?br=1031&db=20140226_aba">Globus pallidus, internal segment</a> (GPi)</li>
+            <li><a href="/static/br/region.html?br=470&db=20140226_aba">Subthalamic nucleus</a> (STN)</li>
+            <li><a href="/static/br/region.html?br=364&db=20140226_aba">Parasubthalamic nucleus</a> (PSTN)</li>
+        </ul>
+
+        <h3 id="title">Details of Connections between two Regions</h3>
+        <p>A lists of all articles with connections between these two regions:</p>
+        <ul>
+            <li>
+                Individual connectivity events between "Nucleus accumbens" and "Ventral tegmental area":
+                <a href="/static/br/details.html?br1=56&br2=749&db=20140226_aba">ABA</a>,
+                <a href="/static/br/details.html?br1=912&br2=11979&db=20140522_brainer">braiNER</a>
+            </li>
+        </ul>
+
+        <h3 id="title">Matrix of connections</h3>
+        <p>
+            Matrices of connection counts between all regions. Note
+            that the frequency of a brain region connection reported in
+            scientific articles does not necessarily reflect the physiological
+            intensity of a connection; the former reflecting the ’popularity’ of a region.
+        </p>
+        <ul>
+            <li>
+                matrix with top 30x30 regions:
+                <a href="/static/br/matrix.html?db=20140226_aba&size=30">ABA</a>,
+                <a href="/static/br/matrix.html?db=20140522_brainer&size=30">braiNER</a>
+            </li>
+            <li>
+                matrix with top 100x100 regions:
+                <a href="/static/br/matrix.html?db=20140226_aba&size=100">ABA</a>,
+                <a href="/static/br/matrix.html?db=20140522_brainer&size=30">braiNER</a>
+            </li>
+            <li>
+                matrix with top 300x300 regions:
+                <a href="/static/br/matrix.html?db=20140226_aba&size=300">ABA</a>,
+                <a href="/static/br/matrix.html?db=20140522_brainer&size=30">braiNER</a> (slow)
+            </li>
+            <li>
+                matrix with all regions:
+                <a href="/static/br/matrix.html?db=20140226_aba&size=3000">ABA</a>,
+                <a href="/static/br/matrix.html?db=20140522_brainer&size=30">braiNER</a> (VERY slow)
+            </li>
+        </ul>
+
+        <h3> REST service</h3>
+        <p>Above pages are also available as a REST service (JSON)</p>
+        <ul>
+            <li>
+            <a href="/20140226_aba/br/matrix?size=10">ABA matrix</a>,
+            <a href="/20140522_brainer/br/matrix?size=10">braiNER matrix</a> <br/>
+                url format: /{db}/br/matrix?size={size}
+            </li>
+            <li>
+                <a href="/20140226_aba/br/region/313">ABA region</a>,
+                <a href="/20140522_brainer/br/region/912">braiNER region</a><br/>
+                url format: /{db}/br/region/{region_id}
+            </li>
+            <li>
+                <a href="/20140226_aba/br/details/313/238">ABA details</a>,
+                <a href="/20140522_brainer/br/details/912/11979">braiNER details</a><br/>
+                url format: /{db}/br/details/{region_id1}/{region_id2}
+            </li>
+            <li>
+                <a href="/search/nucleus accumbens">search</a><br/>
+                url format: /search/{query_string}
+            </li>
+        </ul>
+
+        <h3>About</h3>
+        <p>Please send any feedback to <a href="mailto:renaud.richardet@epfl.ch">Renaud Richardet</a> </p>
+
+    </div>
+</body>
+</html>

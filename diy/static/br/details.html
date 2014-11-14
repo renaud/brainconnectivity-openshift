@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>Loading...</title>
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="/static/js/purl.js" type="text/javascript"></script>
+    <script src="/static/js/utils.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#menu").load("/static/menu.html", function() {
+                $('li#nav4').addClass('active');
+            });
+
+            // ask user for his/her name
+            user = readCookie("bbp-curator");
+            if (user == null){
+                user = prompt("Please enter your name. This is used for curation purposes. Thanks, Renaud","");
+                createCookie("bbp-curator", user, 90);
+            }
+            $('#login').html(user)
+
+            vote = function (elem, db, recordId, upDown) {
+                $.post('/'+db+'/br/feedback/'+recordId+'/'+upDown+'/'+user, function(response){
+                    if (upDown == 2){ // down --> remove result
+                        $(elem).parent().slideUp(500, function() { $(elem).parent().remove(); });
+                    } else { // up --> remove buttons
+                        $(elem).parent().children('img').fadeOut();
+                    }
+                }) .fail(function() {
+                    alert( "Woops, could not process your feedback! Please contact renaud.richardet@epfl.ch" );
+                });
+            };
+
+            var br1 = $.url().param('br1');
+            var br2 = $.url().param('br2');
+            var db  = $.url().param('db');
+            console.log("load" + br1 +"--"+br2+"--"+db);
+            $.getJSON('/' + db + '/br/details/' + br1 +'/' + br2, function(response){
+                $('#title').html('Connectivity events between "'+response.br1_names +
+                    '" and "' + response.br2_names+'"');
+                $('title').html($('#title').html());
+                $.each(response.coocs, function(index, hit) {
+                    if (hit.feedback != 2){ // !wrong --> display
+                        var p = "<p class='hit'>"+hit.snippet+" [<a href='http://www.ncbi.nlm.nih.gov/pubmed/"+hit.pubmed_id+"' title='"+hit.id+"'>PubMed</a>]";
+                        if (hit.feedback === null){ // not rated yet -> add buttons
+                            p += "<img onclick='vote(this, &quot;"+db+"&quot;, "+hit.id+", 1)' src='/static/images/up.png'/> \
+                                  <img onclick='vote(this, &quot;"+db+"&quot;, "+hit.id+", 2)' src='/static/images/down.png'/> </p>";
+                        }
+                        $("#hits").append(p);
+                    }
+                });
+                $('#info').html('Found '+response.coocs.length +' results'); //TODO not correct
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container" style="width: 800px">
+        <div id="menu"></div>
+        <p class="text-right">Logged in as <strong id="login"></strong></p>
+        <h3  id="title"></h3>
+        <div id="info">Loading...</div><br/>
+        <div id="hits"></div>
+    </div>
+</body>
+</html>
