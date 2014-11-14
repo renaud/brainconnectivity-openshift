@@ -1,23 +1,17 @@
-from datetime import date
-from tornado import ioloop, web, autoreload
-import simplejson as json
-import pymysql
-from pymysql import escape_string
-import math, os, codecs
-from collections import Counter, defaultdict
+import tornado.ioloop
+import tornado.web
 
-
-class MainHandler(web.RequestHandler):
+class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("Hello, world4")
+        self.write("Hello, world5")
 
-application = web.Application([
+application = tornado.web.Application([
     (r"/", MainHandler),
 ])
 
 def main(address):
     application.listen(8080, address)
-    ioloop.IOLoop.instance().start()
+    tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":
     address = "127.0.0.1"
