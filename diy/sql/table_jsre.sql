@@ -2,7 +2,7 @@
 -- db tables setup
 -- -----------------------------------------
 
-CREATE DATABASE 20140226_coocs;
+-- CREATE DATABASE 20140226_coocs;
 use 20140226_coocs;
 
 -- GET DATA, unzip
@@ -57,8 +57,8 @@ LOAD DATA LOCAL INFILE 'aba_ftns_rels.tsv'      INTO TABLE 20140226_aba_data FIE
 
 -- LOAD brainer data
 CREATE TABLE `20140522_brainer_data`     LIKE `20140226_aba_data`;
-CREATE TABLE `20140522_brainer_feedback` LIKE 20140226_aba_feedback;
+CREATE TABLE `20140522_brainer_feedback` LIKE `20140226_aba_feedback`;
 LOAD DATA LOCAL INFILE 'brainer_rels_idx_2.tsv' INTO TABLE 20140522_brainer_data FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n';
 
-
+-- some stats
 SELECT table_name, TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '20140226_coocs';

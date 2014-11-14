@@ -23,10 +23,8 @@ print 'BraiNER loaded with %s regions' % len(brainer_brs)
 dbhost = 'booh'
 dbport = '12'
 
-
 def getMySQLConnection():
     return pymysql.connect(host=dbhost, port=int(dbport), user="nweoinewoincew", passwd="noiwneoicnew", db="20140226_coocs", charset='utf8');
-
 
 def get_name(id, id_type):
     if id_type == 'aba':
