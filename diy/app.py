@@ -8,7 +8,7 @@ import simplejson as json
 import pymysql
 from pymysql import escape_string
 import math, os, codecs
-import Counter
+from counter import Counter
 from collections import defaultdict
 import ABA
 
