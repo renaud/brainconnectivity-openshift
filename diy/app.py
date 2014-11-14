@@ -25,7 +25,7 @@ dbport = '17'
 
 
 def getMySQLConnection():
-    return pymysql.connect(host=dbhost, port=dbport, user="nweoinewoincew", passwd="noiwneoicnew", db="20140226_coocs", charset='utf8');
+    return pymysql.connect(host=dbhost, port=int(dbport), user="nweoinewoincew", passwd="noiwneoicnew", db="20140226_coocs", charset='utf8');
 
 
 def get_name(id, id_type):
