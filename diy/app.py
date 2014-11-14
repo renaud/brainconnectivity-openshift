@@ -6,17 +6,18 @@ from pymysql import escape_string
 import math, os, codecs
 import Counter
 from collections import defaultdict
-import ABA
+#import ABA
 
 class MainHandler(web.RequestHandler):
     def get(self):
-        self.write("Hello, world5")
+        self.write("Hello, world7")
 
 application = web.Application([
     (r"/", MainHandler),
 ])
 
 def main(address):
+    print 'pwddd', os.getcwd()
     application.listen(8080, address)
     ioloop.IOLoop.instance().start()
 

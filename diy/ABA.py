@@ -10,7 +10,7 @@ _mapping = {}  # k: aba_id,  v: my_id
 _parent = {}   # k: aba_id,  v: parent_id
 _children = {} # k: aba_id,  v: list of children ids
 def load_aba_onto():
-    with open('data/ABA.tsv') as tsv:
+    with open('diy/data/ABA.tsv') as tsv:
         next(tsv)
         for line in csv.reader(tsv, delimiter='\t'):
             aba_id  =    int(line[0])
