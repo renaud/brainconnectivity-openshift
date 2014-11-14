@@ -27,7 +27,7 @@ def load_aba_onto():
                 if (parent_id not in _children):
                     _children[parent_id] = []
                 _children[parent_id].append(aba_id)
-    print 'ABA loaded with {} items.'.format(len(_onto))
+    print 'ABA loaded with items', len(_onto)
 load_aba_onto()
 assert _onto['intraparafloccular fissure'] == 49, 'could not load aba onto'
 assert _mapping[49] == 44, 'could not load aba onto'
