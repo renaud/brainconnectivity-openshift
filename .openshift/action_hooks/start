@@ -3,4 +3,4 @@
 # script. The application will work only if it binds to
 # $OPENSHIFT_DIY_IP:8080
 cd ${OPENSHIFT_REPO_DIR}/diy/
-nohup hellotornado.py > ${OPENSHIFT_DIY_LOG_DIR}/hellotornado.log 2>&1 &
+nohup python hellotornado.py > ${OPENSHIFT_DIY_LOG_DIR}/hellotornado.log 2>&1 &
