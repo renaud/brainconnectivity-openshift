@@ -14,7 +14,7 @@ import ABA
 
 
 # load brainer vocab into dict
-vocab_file = 'diy/data/20140522_brainer_entities_idx_2.tsv' #20140509_brainer_entities_idx.tsv'
+vocab_file = 'data/20140522_brainer_entities_idx_2.tsv'
 brainer_brs = dict((idx, br.rstrip()) for (idx, br) in enumerate(open(vocab_file).readlines()))
 assert len(brainer_brs) > 2000
 assert 'hippocampus' in brainer_brs.values()
