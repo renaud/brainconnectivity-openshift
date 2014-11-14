@@ -6,4 +6,4 @@ virtualenv = os.path.join(cwd, '..', 'misc/virtenv/bin/activate_this.py')
 execfile(virtualenv, dict(__file__=virtualenv))
 
 import app
-app.main(os.environ['OPENSHIFT_DIY_IP'])
+app.main(os.environ['OPENSHIFT_DIY_IP'],os.environ['OPENSHIFT_MYSQL_DB_HOST'],os.environ['OPENSHIFT_MYSQL_DB_PORT'])

@@ -1,12 +1,12 @@
--------------------------------------------
+-- -----------------------------------------
 -- db tables setup
--------------------------------------------
+-- -----------------------------------------
 
 CREATE DATABASE 20140226_coocs;
 use 20140226_coocs;
 
 -- GET DATA, unzip
--- https://drive.switch.ch/public.php?service=files&t=71204d4bbf908f574bcd5712084984d4
+-- wget 'https://drive.switch.ch/public.php?service=files&t=71204d4bbf908f574bcd5712084984d4&download'
 -- mysql ... --local-infile
 
 -- -------------------------------------------
@@ -59,3 +59,6 @@ LOAD DATA LOCAL INFILE 'aba_ftns_rels.tsv'      INTO TABLE 20140226_aba_data FIE
 CREATE TABLE `20140522_brainer_data`     LIKE `20140226_aba_data`;
 CREATE TABLE `20140522_brainer_feedback` LIKE 20140226_aba_feedback;
 LOAD DATA LOCAL INFILE 'brainer_rels_idx_2.tsv' INTO TABLE 20140522_brainer_data FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n';
+
+
+SELECT table_name, TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '20140226_coocs';
