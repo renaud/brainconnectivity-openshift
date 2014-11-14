@@ -21,7 +21,7 @@ assert 'hippocampus' in brainer_brs.values()
 print 'BraiNER loaded with %s regions' % len(brainer_brs)
 
 dbhost = 'booh'
-dbport = '17'
+dbport = '12'
 
 
 def getMySQLConnection():
