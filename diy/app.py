@@ -49,8 +49,8 @@ class DetailsHandler(web.RequestHandler):
     QUERY = '''SELECT dt.pubmed_id, dt.snippet, dt.id,
         dt.extr_topdown, dt.extr_kernel, dt.extr_rules, fb.feedback,
         (0.28 * dt.extr_topdown + 0.29 * dt.extr_kernel + 0.43 * dt.extr_rules) AS score
-        FROM {}_data AS dt LEFT JOIN {}_feedback AS fb ON dt.id = fb.data_id
-        WHERE ((e1_entity IN ({}) AND e2_entity IN ({})) OR (e1_entity IN ({}) AND e2_entity IN ({}) ))
+        FROM {0}_data AS dt LEFT JOIN {1}_feedback AS fb ON dt.id = fb.data_id
+        WHERE ((e1_entity IN ({2}) AND e2_entity IN ({3})) OR (e1_entity IN ({4}) AND e2_entity IN ({5}) ))
         ORDER BY score DESC'''
 
     def get(self, db, br1, br2):
@@ -70,7 +70,7 @@ class DetailsHandler(web.RequestHandler):
 
 
 class FeedbackHandler(web.RequestHandler):
-    QUERY = '''INSERT INTO {}_feedback (data_id, feedback, user, id)
+    QUERY = '''INSERT INTO {0}_feedback (data_id, feedback, user, id)
                VALUES (%s, %s, %s, NULL)'''
 
     def post(self, db, data_id, feedback, user=''):
@@ -81,7 +81,7 @@ class FeedbackHandler(web.RequestHandler):
 
 
 class MatrixHandler(web.RequestHandler):
-    QUERY = 'SELECT count(*) AS cnt, e1_entity AS e1, e2_entity AS e2 FROM {}_data GROUP BY e1, e2'
+    QUERY = 'SELECT count(*) AS cnt, e1_entity AS e1, e2_entity AS e2 FROM {0}_data GROUP BY e1, e2'
 
     def get(self, db):
         id_type = db.split('_')[1] # aba or brainer
@@ -102,7 +102,6 @@ class MatrixHandler(web.RequestHandler):
             if frm > to: # symetrize
                 frm, to = to, frm
             if frm != to:
-                #print '{}\t{}\t{}'.format(frm, to, cnt)
                 coocs[frm][to] += cnt
 
         # a tuple of top br (aba_id, name)
@@ -129,7 +128,7 @@ class SearchHandler(web.RequestHandler): # FIXME toooo hardcoded!
 
 class RegionHandler(web.RequestHandler):
     QUERY = '''SELECT count(*) AS cnt, e1_entity AS e1, e2_entity AS e2
-        FROM {}_data WHERE ( e1_entity IN ({}) OR e2_entity IN ({}) ) GROUP BY e1, e2'''
+        FROM {0}_data WHERE ( e1_entity IN ({1}) OR e2_entity IN ({2}) ) GROUP BY e1, e2'''
 
     def get(self, db, region_ids_str):
         id_type = db.split('_')[1] # aba or brainer
